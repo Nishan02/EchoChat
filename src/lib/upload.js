@@ -15,3 +15,4 @@ async function uploadImage(file) {
 
 
 export default upload;
+

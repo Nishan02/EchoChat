@@ -5,7 +5,8 @@ import { AppContext } from '../../context/AppContext';
 import { arrayUnion, doc, getDoc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { toast } from 'react-toastify';
-import upload from '../../lib/upload';
+import { uploadFile } from '../../lib/uploadFile';
+
 
 const ChatBox = () => {
 
@@ -71,7 +72,8 @@ const ChatBox = () => {
 
   const sendImage = async (e) => {
 
-    const fileUrl = await upload(e.target.files[0])
+    const fileUrl = await uploadFile(e.target.files[0]);
+
 
     if (fileUrl && messagesId) {
       await updateDoc(doc(db, "messages", messagesId), {
