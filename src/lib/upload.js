@@ -1,22 +1,30 @@
-// src/lib/upload.js
-import { supabase } from "../config/supabase";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
-async function uploadImage(file) {
-  const fileName = `${Date.now()}_${file.name}`;
 
-  // make sure the bucket name below matches the bucket you created in Supabase
-  const bucketName = "uploads";
+const upload = async (file) => {
+    
+    const storage = getStorage();
+    const storageRef = ref(storage, `images/${Date.now() + file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
-  const { error } = await supabase.storage
-    .from(bucketName)
-    .upload(fileName, file);
+    return new Promise((resolve, reject) => {
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const progress =
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log("Upload is " + progress + "% done");
+            },
+            (error) => {
+                reject("Something went wrong!" + error.code);
+            },
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    resolve(downloadURL);
+                });
+            }
+        );
+    });
+};
 
-  if (error) throw error;
-
-  // Get public URL (use same bucket name)
-  const { data: publicData } = supabase.storage.from(bucketName).getPublicUrl(fileName);
-
-  return publicData.publicUrl;
-}
-
-export default uploadImage;
+export default upload;

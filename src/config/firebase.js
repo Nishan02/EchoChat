@@ -7,15 +7,14 @@ import { toast } from "react-toastify";
 // --------- Paste Your Firebase Config File Here ---------
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDX2xe_dMgGU2qng8UI0SnmF4h45-SLSK0",
-  authDomain: "budgetbuddy-862d3.firebaseapp.com",
-  projectId: "budgetbuddy-862d3",
-  storageBucket: "budgetbuddy-862d3.firebasestorage.app",
-  messagingSenderId: "916047828822",
-  appId: "1:916047828822:web:37a7eab41366fe51d068f7",
-  measurementId: "G-HL27YL7NQ0"
+  apiKey: "AIzaSyChvVJpGtD3M9IMV7oRj3LQ1hQQCklvPr8",
+  authDomain: "echochat-f9a4c.firebaseapp.com",
+  projectId: "echochat-f9a4c",
+  storageBucket: "echochat-f9a4c.firebasestorage.app",
+  messagingSenderId: "355389248551",
+  appId: "1:355389248551:web:ccece5ebd3eb242dbf6a02",
+  measurementId: "G-RK7FKW6QRD"
 };
-
 
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
